@@ -274,6 +274,6 @@ public class RegistroSesion extends AppCompatActivity {
         txtTelefono.setText("");
         txtUsuario.setText("");
         txtContrasenia.setText("");
-        txtRutaFoto.setText("");
+        tvImagePath.setText("");
     }
 }
