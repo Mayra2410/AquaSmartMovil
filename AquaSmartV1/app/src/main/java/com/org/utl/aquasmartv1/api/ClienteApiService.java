@@ -16,5 +16,7 @@ public interface ClienteApiService {
     @FormUrlEncoded
     @POST("cliente/insertCliente")
     Call<JsonObject> insertCliente(@Field("datosCliente") String cliente);
-
+    @FormUrlEncoded
+    @GET("cliente/porUsuarioC")
+    Call<List<Cliente>> obtenerCliente(@Field("nombre") String nombre);
 }
