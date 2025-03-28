@@ -212,8 +212,8 @@ public class RegistroSesion extends AppCompatActivity {
                     // Combinar ciudades con estados
                     for (Ciudad ciudad : ciudades) {
                         for (Estado estado : estados) {
-                            if (ciudad.getIdEstado().getIdEstado() == estado.getIdEstado()) {
-                                ciudad.getIdEstado().setNombreEstado(estado.getNombreEstado());
+                            if (ciudad.getEstado().getIdEstado() == estado.getIdEstado()) {
+                                ciudad.getEstado().setNombre(estado.getNombre());
                                 break;
                             }
                         }
@@ -231,7 +231,7 @@ public class RegistroSesion extends AppCompatActivity {
     private void mostrarCiudadesEstadoEnSpinner(List<Ciudad> ciudades) {
         List<String> nombresCiudades = new ArrayList<>();
         for (Ciudad ciudad : ciudades) {
-            nombresCiudades.add(ciudad.getNombreCiudad() + " - " + ciudad.getIdEstado().getNombreEstado()); // Solo muestra el nombre de la ciudad
+            nombresCiudades.add(ciudad.getNombre() + " - " + ciudad.getEstado().getNombre()); // Solo muestra el nombre de la ciudad
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, nombresCiudades);

@@ -2,14 +2,22 @@ package com.org.utl.aquasmartv1.modal;
 
 public class Estado {
     private int idEstado;
-    private String nombreEstado;
+    private String nombre;
 
     public Estado() {
     }
 
-    public Estado(int idEstado, String nombreEstado) {
+    public Estado(int idEstado, String nombre) {
         this.idEstado = idEstado;
-        this.nombreEstado = nombreEstado;
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getIdEstado() {
@@ -20,19 +28,11 @@ public class Estado {
         this.idEstado = idEstado;
     }
 
-    public String getNombreEstado() {
-        return nombreEstado;
-    }
-
-    public void setNombreEstado(String nombreEstado) {
-        this.nombreEstado = nombreEstado;
-    }
-
     @Override
     public String toString() {
         return "Estado{" +
                 "idEstado=" + idEstado +
-                ", nombreEstado='" + nombreEstado + '\'' +
+                ", nombre='" + nombre + '\'' +
                 '}';
     }
 }

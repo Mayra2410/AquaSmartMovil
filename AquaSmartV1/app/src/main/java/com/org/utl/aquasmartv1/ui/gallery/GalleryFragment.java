@@ -201,10 +201,10 @@ public class GalleryFragment extends Fragment {
 
     private void mostrarInformacionCiudad(Ciudad ciudad) {
         try {
-            binding.txtCiudad.setText("Ciudad: " + ciudad.getNombreCiudad());
+            binding.txtCiudad.setText("Ciudad: " + ciudad.getNombre());
 
-            if (ciudad.getIdEstado() != null) {
-                binding.txtEstado.setText("Estado: " + ciudad.getIdEstado().getNombreEstado());
+            if (ciudad.getEstado() != null) {
+                binding.txtEstado.setText("Estado: " + ciudad.getEstado().getNombre());
             } else {
                 binding.txtEstado.setText("Estado: No especificado");
             }

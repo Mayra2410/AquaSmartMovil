@@ -2,16 +2,16 @@ package com.org.utl.aquasmartv1.modal;
 
 public class Ciudad {
     private int idCiudad;
-    private String nombreCiudad;
-    private Estado idEstado;
+    private String nombre;
+    private Estado estado;
 
     public Ciudad() {
     }
 
-    public Ciudad(int idCiudad, String nombreCiudad, Estado idEstado) {
+    public Ciudad(int idCiudad, String nombre, Estado estado) {
         this.idCiudad = idCiudad;
-        this.nombreCiudad = nombreCiudad;
-        this.idEstado = idEstado;
+        this.nombre = nombre;
+        this.estado = estado;
     }
 
     public int getIdCiudad() {
@@ -22,28 +22,28 @@ public class Ciudad {
         this.idCiudad = idCiudad;
     }
 
-    public String getNombreCiudad() {
-        return nombreCiudad;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCiudad(String nombreCiudad) {
-        this.nombreCiudad = nombreCiudad;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Estado getIdEstado() {
-        return idEstado;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public void setIdEstado(Estado idEstado) {
-        this.idEstado = idEstado;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     @Override
     public String toString() {
         return "Ciudad{" +
                 "idCiudad=" + idCiudad +
-                ", nombreCiudad='" + nombreCiudad + '\'' +
-                ", idEstado=" + idEstado +
+                ", nombre='" + nombre + '\'' +
+                ", estado=" + estado +
                 '}';
     }
 }
