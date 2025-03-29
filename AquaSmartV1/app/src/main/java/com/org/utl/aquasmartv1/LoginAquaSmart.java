@@ -63,9 +63,11 @@ public class LoginAquaSmart extends AppCompatActivity {
         });
     }
 
-    private void IniciarSesion() {
-        Intent goRegistroUsuario = new Intent(this, MainActivity.class);
-        startActivity(goRegistroUsuario);
+    private void IniciarSesion(String nombre) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("USERNAME", nombre); // Asegúrate que la clave sea "USERNAME"
+        startActivity(intent);
+        finish();
     }
 
     private void Registrar() {
@@ -101,7 +103,7 @@ public class LoginAquaSmart extends AppCompatActivity {
                             // Verificación
                             Log.d("LoginDebug", "Usuario guardado: " + user);
 
-                            IniciarSesion();
+                            IniciarSesion(user);
                             Toast.makeText(LoginAquaSmart.this, "Login correcto", Toast.LENGTH_SHORT).show();
                         }
                     }

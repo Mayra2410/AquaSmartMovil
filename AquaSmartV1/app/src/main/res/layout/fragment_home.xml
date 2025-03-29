@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,45 +19,59 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="30dp"
-            android:background="@drawable/diseredondo">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Perfil y Cuenta"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="34sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imgPerfil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Foto de perfil"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:id="@+id/contentLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!-- Sección de título y foto de perfil -->
                 <TextView
-                    android:id="@+id/TextView"
+                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nombre de Persona: "
+                    android:text="Perfil y Cuenta"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imgPerfil"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="Foto de perfil"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Foto de perfil"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- Sección de datos personales -->
+                <TextView
+                    android:id="@+id/lblNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Nombre:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -65,22 +80,17 @@
                     android:id="@+id/txtNombrePersona"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Apellido Paterno -->
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/lblApePaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Apellido Paterno: "
+                    android:layout_marginTop="8dp"
+                    android:text="Apellido Paterno:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -92,18 +102,14 @@
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Apellido Materno -->
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/lblApeMaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Apellido Materno: "
+                    android:layout_marginTop="8dp"
+                    android:text="Apellido Materno:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -112,22 +118,17 @@
                     android:id="@+id/txtApeMaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Edad -->
                 <TextView
-                    android:id="@+id/textView20"
+                    android:id="@+id/lblEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Edad: "
+                    android:layout_marginTop="8dp"
+                    android:text="Edad:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -136,22 +137,17 @@
                     android:id="@+id/txtEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Email -->
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/lblEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Correo: "
+                    android:layout_marginTop="8dp"
+                    android:text="Correo:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -160,22 +156,17 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Teléfono -->
                 <TextView
-                    android:id="@+id/textView24"
+                    android:id="@+id/lblTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Telefono: "
+                    android:layout_marginTop="8dp"
+                    android:text="Teléfono:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -184,22 +175,17 @@
                     android:id="@+id/txtTelefono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Ciudad -->
                 <TextView
-                    android:id="@+id/textView26"
+                    android:id="@+id/lblCiudad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ciudad - Estado: "
+                    android:layout_marginTop="8dp"
+                    android:text="Ciudad:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -208,22 +194,17 @@
                     android:id="@+id/txtCiudad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
+                <!-- Usuario -->
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/lblUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Usuario: "
+                    android:layout_marginTop="8dp"
+                    android:text="Usuario:"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -232,59 +213,68 @@
                     android:id="@+id/txtUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:orientation="vertical">
 
+                <!-- Contraseña -->
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/lblContrasenia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Contraseña:"
                     android:textColor="@color/white"
-                    android:text="Contraseña: "
                     android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtContrasenia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:text="TextView"
-                    android:textSize="24sp"
-                    android:textAlignment="center"/>
-            </LinearLayout>
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:orientation="vertical"
-                android:padding="16dp">
+                    android:textSize="24sp" />
 
+                <!-- Última conexión -->
+                <TextView
+                    android:id="@+id/lblUltimaConexion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Última conexión:"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtUltimaConexion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <!-- Botón para galería -->
                 <Button
                     android:id="@+id/btnOpenGallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
                     android:background="@drawable/diseredondo"
                     android:text="Abrir Galería"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tvImagePath"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:text="Ruta de la imagen aparecerá aquí"
-                    android:textAlignment="center"/>
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
