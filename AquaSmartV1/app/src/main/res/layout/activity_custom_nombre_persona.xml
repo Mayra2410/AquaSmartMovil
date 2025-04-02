@@ -2,104 +2,230 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/diseredondo"
     android:orientation="vertical"
     android:padding="16dp">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:text="Editar Datos Personales"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Nombre"
-        android:layout_marginTop="16dp"/>
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Apellido Paterno"
-        android:layout_marginTop="8dp"/>
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editApellidoP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/white"
         android:text="Apellido Materno"
-        android:layout_marginTop="8dp"/>
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editApellidoM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Edad"
-        android:layout_marginTop="8dp"/>
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editEdad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Correo"
-        android:layout_marginTop="8dp"/>
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Telefono"
-        android:layout_marginTop="8dp"/>
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/editTelefono"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"/>
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Ciudad - Estado"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <Spinner
+        android:id="@+id/spinnerCiudad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/white" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Nombre Usuario"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/editNombreUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Contraseña "
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/editContrasenia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:inputType="textPersonName"
+        android:textColor="@color/white" />
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="108dp"
+                android:padding="22dp"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="2dp"
+                android:paddingRight="2dp"
+                android:src="@drawable/wired_lineal_61_camera_hover_flash" />
+            <Button
+                android:id="@+id/btnOpenGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Abrir Galería"/>
+            <TextView
+                android:id="@+id/tvImagePath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Ruta de la imagen aparecerá aquí"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="16dp"
-        android:gravity="end">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"/>
+            android:backgroundTint="#03092E"
+            android:shadowRadius="40"
+            android:text="Cancelar"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:backgroundTint="#03092E"
+            android:shadowRadius="40"
             android:text="Guardar"
-            android:layout_marginStart="8dp"/>
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

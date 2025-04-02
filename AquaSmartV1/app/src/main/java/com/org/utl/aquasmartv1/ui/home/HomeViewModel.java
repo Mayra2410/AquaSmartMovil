@@ -1,5 +1,8 @@
 package com.org.utl.aquasmartv1.ui.home;
 
+import android.os.Looper;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,11 +12,14 @@ import com.google.gson.GsonBuilder;
 import com.org.utl.aquasmartv1.api.ClienteApiService;
 import com.org.utl.aquasmartv1.api.Globals;
 import com.org.utl.aquasmartv1.TimestampTypeAdapter;
+import com.org.utl.aquasmartv1.modal.Ciudad;
 import com.org.utl.aquasmartv1.modal.Cliente;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+import java.util.logging.Handler;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;

@@ -19,7 +19,7 @@ public interface ClienteApiService {
     Call<JsonObject> insertCliente(@Field("datosCliente") String cliente);
 
     @GET("cliente/porUsuarioC")
-    Call<List<Cliente>> getClientePorUsuario(@Query("usuario") String nombreUsuario);
+    Call<List<Cliente>> getClientePorUsuario(@Query("nombre") String nombreUsuario);
 
     @FormUrlEncoded
     @POST("cliente/updateCliente")
