@@ -35,9 +35,9 @@ public class HomeFragment extends Fragment {
 
     private void setupTextViewListeners(View root) {
         // Obtener referencias a los TextViews
-        TextView txtNombrePersona = root.findViewById(R.id.txtNombrePersona);
-        TextView txtApePaterno = root.findViewById(R.id.txtApePaterno);
-        TextView txtApeMaterno = root.findViewById(R.id.txtApeMaterno);
+        TextView txtNombrePersona = root.findViewById(R.id.txtNumeroExterior);
+        TextView txtApePaterno = root.findViewById(R.id.txtCalleRegistro);
+        TextView txtApeMaterno = root.findViewById(R.id.txtNumeroInterior);
         TextView txtEdad = root.findViewById(R.id.txtEdad);
         TextView txtEmail = root.findViewById(R.id.txtEmail);
         TextView txtTelefono = root.findViewById(R.id.txtTelefono);

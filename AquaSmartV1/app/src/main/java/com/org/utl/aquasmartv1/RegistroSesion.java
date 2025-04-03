@@ -1,8 +1,6 @@
 package com.org.utl.aquasmartv1;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -17,7 +15,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -65,9 +62,9 @@ public class RegistroSesion extends AppCompatActivity {
         });
 
         // Inicializar vistas
-        txtNombrePersona = findViewById(R.id.txtNombrePersona);
-        txtApeMaterno = findViewById(R.id.txtApeMaterno);
-        txtApePaterno = findViewById(R.id.txtApePaterno);
+        txtNombrePersona = findViewById(R.id.txtNumeroExterior);
+        txtApeMaterno = findViewById(R.id.txtNumeroInterior);
+        txtApePaterno = findViewById(R.id.txtCalleRegistro);
         txtEmail = findViewById(R.id.txtEmail);
         txtEdad = findViewById(R.id.txtEdad); // Campo problemático
         txtTelefono = findViewById(R.id.txtTelefono);
@@ -76,7 +73,7 @@ public class RegistroSesion extends AppCompatActivity {
         spinnerCiudad = findViewById(R.id.spinnerCiudad);
         btnRegistrar = findViewById(R.id.btnRegistrar);
         imageView = findViewById(R.id.imageView);
-        btnOpenGallery = findViewById(R.id.btnOpenGallery);
+        btnOpenGallery = findViewById(R.id.btnModificarPropiedad);
         tvImagePath = findViewById(R.id.tvImagePath);
 
         // Configurar el botón para abrir la galería

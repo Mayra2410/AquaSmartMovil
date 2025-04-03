@@ -77,7 +77,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/wired_lineal_21_avatar_hover_jumping" />
                 <EditText
-                    android:id="@+id/txtNombrePersona"
+                    android:id="@+id/txtNumeroExterior"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -100,7 +100,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/wired_lineal_21_avatar_hover_jumping" />
                 <EditText
-                    android:id="@+id/txtApeMaterno"
+                    android:id="@+id/txtNumeroInterior"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -123,7 +123,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/wired_lineal_21_avatar_hover_jumping" />
                 <EditText
-                    android:id="@+id/txtApePaterno"
+                    android:id="@+id/txtCalleRegistro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -282,7 +282,7 @@
                 android:padding="16dp">
 
                 <Button
-                    android:id="@+id/btnOpenGallery"
+                    android:id="@+id/btnModificarPropiedad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Abrir Galería"/>

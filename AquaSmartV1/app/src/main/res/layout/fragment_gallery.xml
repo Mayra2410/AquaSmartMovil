@@ -8,6 +8,7 @@
     tools:context=".ui.gallery.GalleryFragment"
     android:padding="20dp">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/linearLayoutPropiedad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -198,14 +200,14 @@
 
             <!-- Botón para actualizar foto -->
             <Button
-                android:id="@+id/btnOpenGallery"
+                android:id="@+id/btnModificarPropiedad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Actualizar Foto de Propiedad"
-                android:textColor="@color/white"
                 android:background="@drawable/diseredondo"
-                android:textStyle="bold"/>
+                android:text="Modificar Datos de la Propiedad"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvImagePath"
@@ -214,6 +216,30 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
                 android:textAlignment="center"/>
+
+            <!-- Mensaje cuando no hay propiedades -->
+            <TextView
+                android:id="@+id/txtSinPropiedades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No se encontraron propiedades registradas"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
+
+            <!-- Botón para registrar nueva propiedad -->
+            <Button
+                android:id="@+id/btnRegistrarPropiedad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/diseredondo"
+                android:text="Registrar Nueva Propiedad"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@ public class CustomNombrePersona extends Dialog {
         setContentView(R.layout.activity_custom_nombre_persona);
 
         TextView titleTextView = findViewById(R.id.titleTextView);
-        selectedTextEditText = findViewById(R.id.txtNombrePersona);
+        selectedTextEditText = findViewById(R.id.txtNumeroExterior);
         okButton = findViewById(R.id.okButton);
         closeButton = findViewById(R.id.okButton);
         // Mostrar el texto seleccionado

@@ -62,7 +62,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtNombrePersona"
+                    android:id="@+id/txtNumeroExterior"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
@@ -86,7 +86,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtApePaterno"
+                    android:id="@+id/txtCalleRegistro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -109,7 +109,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtApeMaterno"
+                    android:id="@+id/txtNumeroInterior"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
@@ -270,7 +270,7 @@
                 android:padding="16dp">
 
                 <Button
-                    android:id="@+id/btnOpenGallery"
+                    android:id="@+id/btnModificarPropiedad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
