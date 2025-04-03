@@ -36,7 +36,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistroPropiedad extends AppCompatActivity {
-
+//hola
     private static final int PICK_IMAGE = 1;
 
     private Spinner spinnerCiudad, spinnerMedidor;
