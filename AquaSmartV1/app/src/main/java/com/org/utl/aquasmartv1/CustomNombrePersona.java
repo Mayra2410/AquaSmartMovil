@@ -4,11 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,24 +19,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import com.org.utl.aquasmartv1.api.CiudadApiService;
 import com.org.utl.aquasmartv1.api.EstadoApiService;
 import com.org.utl.aquasmartv1.api.Globals;
+import com.org.utl.aquasmartv1.api.ImageUtils;
 import com.org.utl.aquasmartv1.modal.Ciudad;
 import com.org.utl.aquasmartv1.modal.Estado;
 import com.org.utl.aquasmartv1.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,14 +47,15 @@ public class CustomNombrePersona extends Dialog {
     private String nombre, apellidoP, apellidoM, edad, telefono, email, ciudadEstado, nombreUsuario, contrasenia;
     private EditText editNombre, editApellidoP, editApellidoM, editEdad, editCorreo, editTelefono, editNombreUsuario, editContrasenia;
     private Spinner spinnerCiudad;
-    private Button btnOk, btnCancel, btnOpenGallery;
-    private TextView tvImagePath;
+    private Button btnOk, btnCancel, btnOpenGallery, btnTogglePassword;
     private GifImageView imageView;
+    private TextView tvImagePath;
     private OnDialogResultListener listener;
     private List<Ciudad> ciudades = new ArrayList<>();
     private String selectedCiudadId;
     private String imageBase64;
     private FragmentActivity fragmentActivity;
+    private boolean isPasswordVisible = false;
 
     public interface OnDialogResultListener {
         void onDialogResult(
@@ -115,6 +110,14 @@ public class CustomNombrePersona extends Dialog {
         initViews();
         setupSpinner();
         setupActionButtons();
+        setupPasswordToggle();
+
+        if (imageBase64 != null && !imageBase64.isEmpty()) {
+            cargarImagen(imageBase64);
+        } else {
+            imageView.setImageResource(R.drawable.usuario);
+            tvImagePath.setText("Sin imagen de perfil");
+        }
     }
 
     private void initViews() {
@@ -130,6 +133,7 @@ public class CustomNombrePersona extends Dialog {
         btnOk = findViewById(R.id.btnOk);
         btnCancel = findViewById(R.id.btnCancel);
         btnOpenGallery = findViewById(R.id.btnOpenGallery);
+        btnTogglePassword = findViewById(R.id.btnTogglePassword);
         tvImagePath = findViewById(R.id.tvImagePath);
         imageView = findViewById(R.id.imageView);
 
@@ -141,10 +145,24 @@ public class CustomNombrePersona extends Dialog {
         editTelefono.setText(telefono);
         editNombreUsuario.setText(nombreUsuario);
         editContrasenia.setText(contrasenia);
+    }
 
-        if (imageBase64 != null && !imageBase64.isEmpty()) {
-            cargarImagenDesdeBase64(imageBase64);
+    private void setupPasswordToggle() {
+        btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
+    }
+
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Ocultar contraseña
+            editContrasenia.setTransformationMethod(new PasswordTransformationMethod());
+            btnTogglePassword.setText("Mostrar");
+        } else {
+            // Mostrar contraseña
+            editContrasenia.setTransformationMethod(null);
+            btnTogglePassword.setText("Ocultar");
         }
+        isPasswordVisible = !isPasswordVisible;
+        editContrasenia.setSelection(editContrasenia.getText().length());
     }
 
     private void setupActionButtons() {
@@ -155,7 +173,8 @@ public class CustomNombrePersona extends Dialog {
 
     private void openGallery() {
         try {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
             fragmentActivity.startActivityForResult(intent, 100);
         } catch (Exception e) {
             Log.e("CustomNombrePersona", "Error al abrir galería", e);
@@ -163,77 +182,39 @@ public class CustomNombrePersona extends Dialog {
         }
     }
 
-    // Método para que la actividad padre pueda pasar el resultado
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100 && resultCode == AppCompatActivity.RESULT_OK && data != null) {
+        if (requestCode == 100 && resultCode == FragmentActivity.RESULT_OK && data != null) {
             Uri selectedImageUri = data.getData();
             if (selectedImageUri != null) {
-                handleImageSelection(selectedImageUri);
-            }
-        }
-    }
-
-    private void handleImageSelection(Uri uri) {
-        try (InputStream inputStream = getContext().getContentResolver().openInputStream(uri)) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(inputStream, null, options);
-            inputStream.close();
-
-            options.inSampleSize = calculateInSampleSize(options, 800, 800);
-            options.inJustDecodeBounds = false;
-
-            try (InputStream newInputStream = getContext().getContentResolver().openInputStream(uri)) {
-                Bitmap bitmap = BitmapFactory.decodeStream(newInputStream, null, options);
-
-                if (bitmap != null) {
-                    imageView.setImageBitmap(bitmap);
-                    imageBase64 = convertBitmapToBase64(bitmap);
-                    tvImagePath.setText("Imagen seleccionada");
+                try {
+                    Bitmap bitmap = ImageUtils.getBitmapFromUri(getContext(), selectedImageUri);
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                        imageBase64 = ImageUtils.bitmapToBase64(bitmap);
+                        tvImagePath.setText("Imagen seleccionada");
+                    }
+                } catch (Exception e) {
+                    Log.e("CustomNombrePersona", "Error al procesar imagen", e);
+                    Toast.makeText(getContext(), "Error al procesar imagen", Toast.LENGTH_SHORT).show();
                 }
             }
-        } catch (Exception e) {
-            Log.e("CustomNombrePersona", "Error al procesar imagen", e);
-            Toast.makeText(getContext(), "Error al procesar imagen", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            while ((halfHeight / inSampleSize) >= reqHeight &&
-                    (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-        return inSampleSize;
-    }
-
-    private String convertBitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
-    private void cargarImagenDesdeBase64(String base64String) {
+    private void cargarImagen(String imageData) {
         try {
-            String base64Image = base64String.contains(",") ? base64String.split(",")[1] : base64String;
-            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            if (decodedByte != null) {
-                imageView.setImageBitmap(decodedByte);
+            Bitmap bitmap = ImageUtils.loadImage(getContext(), imageData);
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap);
                 tvImagePath.setText("Imagen actual del perfil");
+            } else {
+                imageView.setImageResource(R.drawable.usuario);
+                tvImagePath.setText("Error al cargar imagen");
             }
         } catch (Exception e) {
             Log.e("CustomNombrePersona", "Error al cargar imagen", e);
+            imageView.setImageResource(R.drawable.usuario);
+            tvImagePath.setText("Error al cargar imagen");
         }
     }
 
@@ -261,6 +242,26 @@ public class CustomNombrePersona extends Dialog {
         dismiss();
     }
 
+    // Método para generar hash MD5 (si necesitas generar uno nuevo)
+    private String generateMD5(String text) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(text.getBytes());
+            byte[] messageDigest = digest.digest();
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String h = Integer.toHexString(0xFF & b);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
     private void setupSpinner() {
         obtenerTodosLasCiudadesEstados();
         spinnerCiudad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

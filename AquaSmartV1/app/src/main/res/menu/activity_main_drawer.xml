@@ -14,7 +14,7 @@
             android:title="@string/menu_gallery" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/wired_lineal_1522_housekeeper_hover_pinch"
             android:title="@string/menu_slideshow" />
     </group>
 </menu>

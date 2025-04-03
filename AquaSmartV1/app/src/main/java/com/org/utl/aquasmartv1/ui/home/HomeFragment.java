@@ -1,11 +1,14 @@
 package com.org.utl.aquasmartv1.ui.home;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,21 +17,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.org.utl.aquasmartv1.CustomNombrePersona;
 import com.org.utl.aquasmartv1.R;
+import com.org.utl.aquasmartv1.api.ImageUtils;
 import com.org.utl.aquasmartv1.databinding.FragmentHomeBinding;
 import com.org.utl.aquasmartv1.modal.Cliente;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
-
+    private static final int REQUEST_IMAGE_OPEN = 1;
+    private static final int REQUEST_CODE_IMAGE = 1001;
+    private static final int REQUEST_PERMISSION_READ_STORAGE = 1002;
     private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
 
@@ -50,11 +58,10 @@ public class HomeFragment extends Fragment {
 
         setupObservers();
         loadClienteData();
-
+        binding.imgPerfil.setOnClickListener(v -> abrirSelectorImagen());
         binding.contentLayout.setOnClickListener(v -> {
             if (viewModel.getClientesLiveData().getValue() != null &&
                     !viewModel.getClientesLiveData().getValue().isEmpty()) {
-
                 mostrarDialogoEdicionNombre(viewModel.getClientesLiveData().getValue().get(0));
             } else {
                 Toast.makeText(getContext(), "Cargando datos del cliente...", Toast.LENGTH_SHORT).show();
@@ -62,7 +69,13 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
+    private void abrirSelectorImagen() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    }
     private void setupObservers() {
         viewModel.getClientesLiveData().observe(getViewLifecycleOwner(), clientes -> {
             if (clientes != null && !clientes.isEmpty()) {
@@ -105,26 +118,19 @@ public class HomeFragment extends Fragment {
         Cliente cliente = clientes.get(0);
         try {
             if (cliente.getPersona() != null) {
-                // Mostrar información básica
                 binding.txtNombrePersona.setText(cliente.getPersona().getNombre() != null ?
                         cliente.getPersona().getNombre() : "");
-
                 binding.txtApePaterno.setText(cliente.getPersona().getApellidoP() != null ?
                         cliente.getPersona().getApellidoP() : "");
-
                 binding.txtApeMaterno.setText(cliente.getPersona().getApellidoM() != null ?
                         cliente.getPersona().getApellidoM() : "");
-
                 binding.txtEdad.setText(cliente.getPersona().getEdad() > 0 ?
                         String.valueOf(cliente.getPersona().getEdad()) : "");
-
                 binding.txtEmail.setText(cliente.getPersona().getEmail() != null ?
                         cliente.getPersona().getEmail() : "");
-
                 binding.txtTelefono.setText(cliente.getPersona().getTelefono() != null ?
                         cliente.getPersona().getTelefono() : "");
 
-                // Mostrar ciudad y estado
                 if (cliente.getPersona().getCiudad() != null) {
                     String ciudadEstado = "";
                     if (cliente.getPersona().getCiudad().getNombre() != null) {
@@ -137,23 +143,19 @@ public class HomeFragment extends Fragment {
                     binding.txtCiudad.setText(ciudadEstado);
                 }
 
-                // Mostrar información de usuario
                 if (cliente.getPersona().getUsuario() != null) {
                     binding.txtUsuario.setText(cliente.getPersona().getUsuario().getNombre() != null ?
                             cliente.getPersona().getUsuario().getNombre() : "");
-
                     binding.txtContrasenia.setText(cliente.getPersona().getUsuario().getContrasenia() != null ?
                             "••••••••" : "");
 
-                    // Cargar imagen de perfil
-                    if (cliente.getPersona().getUsuario().getFoto() != null &&
-                            !cliente.getPersona().getUsuario().getFoto().isEmpty()) {
-                        cargarImagenBase64(cliente.getPersona().getUsuario().getFoto());
+                    String fotoBase64 = cliente.getPersona().getUsuario().getFoto();
+                    if (fotoBase64 != null && !fotoBase64.isEmpty()) {
+                        cargarImagen(fotoBase64);
                     } else {
                         binding.imgPerfil.setImageResource(R.drawable.usuario);
                     }
 
-                    // Mostrar última conexión
                     if (cliente.getPersona().getUsuario().getDateLastToken() != null) {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
                         String fechaFormateada = sdf.format(cliente.getPersona().getUsuario().getDateLastToken());
@@ -167,22 +169,28 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void cargarImagenBase64(String base64String) {
-        try {
-            String base64Image = base64String.split(",").length > 1 ?
-                    base64String.split(",")[1] : base64String;
-
-            byte[] decodedString = Base64.decode(base64Image, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-            if (decodedByte != null) {
-                binding.imgPerfil.setImageBitmap(decodedByte);
-            } else {
-                binding.imgPerfil.setImageResource(R.drawable.usuario);
-            }
-        } catch (Exception e) {
-            Log.e("HomeFragment", "Error al cargar imagen Base64", e);
+    private void cargarImagen(String imageUri) {
+        if (imageUri == null || imageUri.isEmpty()) {
             binding.imgPerfil.setImageResource(R.drawable.usuario);
+            return;
+        }
+
+        // Verifica permisos primero
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION_READ_STORAGE);
+            return;
+        }
+
+        Bitmap bitmap = ImageUtils.loadImage(requireContext(), imageUri);
+
+        if (bitmap != null) {
+            binding.imgPerfil.setImageBitmap(bitmap);
+        } else {
+            binding.imgPerfil.setImageResource(R.drawable.usuario);
+            Toast.makeText(getContext(), "No se pudo cargar la imagen", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -199,77 +207,53 @@ public class HomeFragment extends Fragment {
     }
 
     private void mostrarDialogoEdicionNombre(Cliente cliente) {
-        if (getActivity() == null || cliente == null || cliente.getPersona() == null) {
+        if (cliente == null || cliente.getPersona() == null || getActivity() == null) {
             return;
         }
 
-        String nombre = cliente.getPersona().getNombre() != null ? cliente.getPersona().getNombre() : "";
-        String apellidoP = cliente.getPersona().getApellidoP() != null ? cliente.getPersona().getApellidoP() : "";
-        String apellidoM = cliente.getPersona().getApellidoM() != null ? cliente.getPersona().getApellidoM() : "";
-        String edad = cliente.getPersona().getEdad() > 0 ? String.valueOf(cliente.getPersona().getEdad()) : "";
-        String email = cliente.getPersona().getEmail() != null ? cliente.getPersona().getEmail() : "";
-        String telefono = cliente.getPersona().getTelefono() != null ? cliente.getPersona().getTelefono() : "";
-
-        String ciudadEstado = "";
-        if (cliente.getPersona().getCiudad() != null) {
-            if (cliente.getPersona().getCiudad().getNombre() != null) {
-                ciudadEstado = cliente.getPersona().getCiudad().getNombre();
-            }
-            if (cliente.getPersona().getCiudad().getEstado() != null &&
-                    cliente.getPersona().getCiudad().getEstado().getNombre() != null) {
-                ciudadEstado += " - " + cliente.getPersona().getCiudad().getEstado().getNombre();
-            }
-        }
-
-        String nombreUsuario = cliente.getPersona().getUsuario() != null ?
-                cliente.getPersona().getUsuario().getNombre() : "";
-        String contrasenia = cliente.getPersona().getUsuario() != null ?
-                cliente.getPersona().getUsuario().getContrasenia() : "";
         String imagenBase64 = cliente.getPersona().getUsuario() != null ?
                 cliente.getPersona().getUsuario().getFoto() : "";
 
         CustomNombrePersona dialog = new CustomNombrePersona(
-                (FragmentActivity) getActivity(),
-                nombre,
-                apellidoP,
-                apellidoM,
-                edad,
-                email,
-                telefono,
-                ciudadEstado,
-                nombreUsuario,
-                contrasenia,
+                requireActivity(),
+                cliente.getPersona().getNombre(),
+                cliente.getPersona().getApellidoP(),
+                cliente.getPersona().getApellidoM(),
+                String.valueOf(cliente.getPersona().getEdad()),
+                cliente.getPersona().getEmail(),
+                cliente.getPersona().getTelefono(),
+                cliente.getPersona().getCiudad() != null ?
+                        cliente.getPersona().getCiudad().getNombre() + " - " +
+                                cliente.getPersona().getCiudad().getEstado().getNombre() : "",
+                cliente.getPersona().getUsuario() != null ?
+                        cliente.getPersona().getUsuario().getNombre() : "",
+                cliente.getPersona().getUsuario() != null ?
+                        cliente.getPersona().getUsuario().getContrasenia() : "",
                 imagenBase64,
                 (nuevoNombre, nuevoApellidoP, nuevoApellidoM, nuevoEdad, nuevoEmail,
                  nuevoTelefono, ciudadId, nuevoNombreUsuario, nuevaContrasenia, nuevaImagenBase64) -> {
 
-                    if (cliente.getPersona() != null) {
-                        // Actualizar datos de la persona
-                        cliente.getPersona().setNombre(nuevoNombre);
-                        cliente.getPersona().setApellidoP(nuevoApellidoP);
-                        cliente.getPersona().setApellidoM(nuevoApellidoM);
+                    binding.imgPerfil.setImageDrawable(null);
 
-                        try {
-                            cliente.getPersona().setEdad(Integer.parseInt(nuevoEdad));
-                        } catch (NumberFormatException e) {
-                            cliente.getPersona().setEdad(0);
-                        }
+                    cliente.getPersona().setNombre(nuevoNombre);
+                    cliente.getPersona().setApellidoP(nuevoApellidoP);
+                    cliente.getPersona().setApellidoM(nuevoApellidoM);
+                    cliente.getPersona().setEdad(Integer.parseInt(nuevoEdad));
+                    cliente.getPersona().setEmail(nuevoEmail);
+                    cliente.getPersona().setTelefono(nuevoTelefono);
 
-                        cliente.getPersona().setEmail(nuevoEmail);
-                        cliente.getPersona().setTelefono(nuevoTelefono);
-
-                        // Actualizar datos de usuario si existen
-                        if (cliente.getPersona().getUsuario() != null) {
-                            cliente.getPersona().getUsuario().setNombre(nuevoNombreUsuario);
-                            cliente.getPersona().getUsuario().setContrasenia(nuevaContrasenia);
-                            cliente.getPersona().getUsuario().setFoto(nuevaImagenBase64);
-                        }
-
-                        // Refrescar la vista
-                        mostrarDatosCliente(List.of(cliente));
-                        // TODO: Descomentar cuando esté listo el método de actualización
-                        // viewModel.actualizarCliente(cliente);
+                    if (cliente.getPersona().getUsuario() != null) {
+                        cliente.getPersona().getUsuario().setNombre(nuevoNombreUsuario);
+                        cliente.getPersona().getUsuario().setContrasenia(nuevaContrasenia);
+                        cliente.getPersona().getUsuario().setFoto(nuevaImagenBase64);
                     }
+
+                    mostrarDatosCliente(List.of(cliente));
+                    /*viewModel.actualizarCliente(cliente).observe(getViewLifecycleOwner(), success -> {
+                        if (!success) {
+                            mostrarError("Error al actualizar los datos");
+                        }
+                    });*/
                 });
 
         dialog.show();

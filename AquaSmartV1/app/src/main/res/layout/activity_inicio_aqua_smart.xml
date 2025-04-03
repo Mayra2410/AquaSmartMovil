@@ -13,17 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/incioaquasmart" />
+        app:srcCompat="@drawable/fondoestrella" />
 
     <Button
         android:id="@+id/btnInicio"
         android:layout_width="356dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/diseredondo"
+        android:layout_margin="40dp"
+        android:backgroundTint="#0F4A7A"
+        android:padding="10dp"
         android:text="Iniciar"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        app:cornerRadius="20dp"
-        android:textColor="@color/white"/>
+        app:cornerRadius="20dp" />
 
 </FrameLayout>

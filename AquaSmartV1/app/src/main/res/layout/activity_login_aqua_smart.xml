@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo02"
     tools:context=".LoginAquaSmart">
 
     <LinearLayout
@@ -15,7 +16,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/diseredondo"
-        android:backgroundTint="#082338"
+        android:backgroundTint="#7A000000"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -69,7 +70,8 @@
                 android:hint="Usuario"
                 android:inputType="text"
                 android:textColor="#F0EAEA"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -95,7 +97,8 @@
                 android:hint="Contraseña"
                 android:inputType="textPassword"
                 android:textColor="#F4F1F1"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -104,9 +107,10 @@
             android:layout_width="211dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#B0C4C4"
+            android:backgroundTint="#4F769B"
             android:text="Iniciar sesión "
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textColorLink="#3D7DBD"
             android:textStyle="bold" />
 
         <TextView
@@ -115,7 +119,8 @@
             android:layout_height="wrap_content"
             android:text="¿Quieres registrarte?"
             android:textAlignment="center"
-            android:textColor="#F2ECEC"
+            android:textColor="#F5F6FA"
+            android:textColorLink="#1976D2"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>

@@ -173,6 +173,11 @@
         android:backgroundTint="@color/white"
         android:inputType="textPersonName"
         android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btnTogglePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mostrar"/>
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
