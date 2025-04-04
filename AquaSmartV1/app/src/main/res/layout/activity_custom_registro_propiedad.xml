@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -23,14 +24,13 @@
             android:background="@drawable/diseredondo"
             android:backgroundTint="#082338"
             android:orientation="vertical"
-            android:padding="20dp"
-            app:circularflow_radiusInDP="20dp">
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Registro"
+                android:text="Registro de Propiedad"
                 android:textAlignment="center"
                 android:textColor="#EDE3E3"
                 android:textSize="24sp"
@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
+                android:layout_marginTop="16dp"
                 app:srcCompat="@drawable/wired_lineal_61_camera_hover_flash" />
 
             <Button
@@ -49,9 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Seleccionar Foto" />
+                android:text="Seleccionar Foto"
+                android:backgroundTint="#B0C4C4"
+                android:textColor="@android:color/black" />
 
-            <!-- Nuevo TextView para mostrar la ruta de la imagen -->
+            <!-- Ruta de la imagen -->
             <TextView
                 android:id="@+id/tvImagePath"
                 android:layout_width="match_parent"
@@ -66,7 +69,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -182,26 +185,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="50dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnRegistrar"
+                    android:id="@+id/btnRegistrarPropiedad"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/diseredondo"
-                    android:text="Registrar" />
+                    android:backgroundTint="#B0C4C4"
+                    android:text="Registrar"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/btnCancelar"
+                    android:id="@+id/btnCancelarPropiedad"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/diseredondo"
-                    android:text="Cancelar" />
+                    android:backgroundTint="#B0C4C4"
+                    android:text="Cancelar"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

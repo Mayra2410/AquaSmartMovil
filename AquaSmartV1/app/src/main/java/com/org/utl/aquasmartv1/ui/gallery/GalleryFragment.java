@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.org.utl.aquasmartv1.R;
+import com.org.utl.aquasmartv1.RegistroPropiedad;
 import com.org.utl.aquasmartv1.custom_registro_propiedad;
 import com.org.utl.aquasmartv1.databinding.FragmentGalleryBinding;
 import com.org.utl.aquasmartv1.api.CiudadApiService;
@@ -60,7 +61,7 @@ public class GalleryFragment extends Fragment {
 
         binding.btnRegistrarPropiedad.setOnClickListener(v -> {
             Log.d("GalleryFragment", "Botón registrar propiedad presionado");
-            Intent intent = new Intent(requireActivity(), custom_registro_propiedad.class);
+            Intent intent = new Intent(requireActivity(), RegistroPropiedad.class);
             startActivity(intent);
         });
 

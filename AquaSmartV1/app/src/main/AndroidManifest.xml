@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".custom_registro_propiedad"
+            android:name=".RegistroPropiedad"
             android:exported="false" />
         <activity
             android:name=".CustomNombrePersona"
