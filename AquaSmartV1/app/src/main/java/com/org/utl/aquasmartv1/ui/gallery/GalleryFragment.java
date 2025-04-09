@@ -1,5 +1,6 @@
 package com.org.utl.aquasmartv1.ui.gallery;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,7 +63,7 @@ public class GalleryFragment extends Fragment {
         binding.btnRegistrarPropiedad.setOnClickListener(v -> {
             Log.d("GalleryFragment", "Botón registrar propiedad presionado");
             Intent intent = new Intent(requireActivity(), RegistroPropiedad.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1); // Usa un código de request adecuado (1 en este caso)
         });
 
         // Observadores
@@ -273,5 +274,19 @@ public class GalleryFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            boolean shouldRefresh = data.getBooleanExtra("refresh", false);
+            if (shouldRefresh) {
+                String username = obtenerUsuarioLogueado();
+                if (username != null && !username.isEmpty()) {
+                    galleryViewModel.cargarPropiedades(username);
+                }
+            }
+        }
     }
 }

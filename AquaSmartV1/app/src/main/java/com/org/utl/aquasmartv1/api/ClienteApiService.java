@@ -11,12 +11,16 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ClienteApiService {
     @FormUrlEncoded
     @POST("cliente/insertCliente")
     Call<JsonObject> insertCliente(@Field("datosCliente") String cliente);
-    @FormUrlEncoded
-    @GET("cliente/porUsuarioC")
-    Call<List<Cliente>> obtenerCliente(@Field("nombre") String nombre);
+    @GET("cliente/obtenerIdCliente")
+    Call<JsonObject> obtenerIdCliente(@Query("usuario") String usuario);
+    // Nuevo endpoint para obtener todos los clientes
+    @GET("cliente/getAllCliente")
+    Call<List<Cliente>> obtenerTodosClientes();
 }
